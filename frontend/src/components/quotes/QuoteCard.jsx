@@ -73,7 +73,7 @@ function QuoteCard() {
     
 
     return (
-        <div className="space-y-4 relative flex flex-col ">
+        <div className="space-y-4 relative flex flex-col mt-5">
 
             <div className='overflow-hidden relative max-h-screen '>
             {allQuotes && allQuotes.map((quote, index) => {
@@ -85,13 +85,14 @@ function QuoteCard() {
                         style={{
                             backgroundColor: `rgb(${bgColor.r}, ${bgColor.g}, ${bgColor.b})`,
                             display: index === currentIndex ? 'flex' : 'none',
+
                         }}
-                        className="p-4 border-none rounded-lg shadow mx-100 min-h-screen flex flex-col gap-6 relative justify-evenly"
+                        className="p-4 border-none rounded-3xl shadow mx-100 min-h-160 w-100 flex flex-col gap-6 relative justify-around "
                         >
-                        <h3 className="text-gray-950 p-3 rounded text-2xl">
+                        <h3 className="text-gray-950 p-3 rounded text-3xl">
                             {quote.content}
                         </h3>
-                        <p className="mt-2 text-gray-900 text-5xl absolute right-3 bottom-5 font-medium">
+                        <p className="mt-2 text-gray-900 text-3xl absolute right-3 bottom-5 font-medium">
                             - {quote.author}
                         </p>
                     </div>

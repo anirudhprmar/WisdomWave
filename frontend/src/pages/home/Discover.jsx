@@ -3,7 +3,7 @@ import QuoteCard from '../../components/quotes/QuoteCard'
 
 function Discover() {
   return (
-    <div className='mt-20 '>
+    <div>
       <QuoteCard/>
     </div>
     
