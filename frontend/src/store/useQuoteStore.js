@@ -39,5 +39,33 @@ export const useQuoteStore = create((set)=>({
         }finally{
             set({isLoading: false})
         }
+    },
+    fetchRandomQuote: async () => {
+        set({isLoading: true})
+        try {
+            const response = await fetch('http://localhost:5000/api/quotes/random');
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                // Format the scraped quotes to match your quote structure
+                const formattedQuotes = data.data.map(quote => ({
+                    _id: 'scraped-' + Math.random(),
+                    content: quote.quote,
+                    author: quote.author,
+                    book: quote.book
+                }));
+                return formattedQuotes;
+            } else {
+                console.error("Error fetching quotes:", data.message);
+                toast.error(data.message);
+                return null;
+            }
+        } catch (error) {
+            console.error("Failed to fetch random quotes:", error);
+            toast.error("Failed to fetch random quotes");
+            return null;
+        } finally {
+            set({isLoading: false})
+        }
     }
-}))
+}));

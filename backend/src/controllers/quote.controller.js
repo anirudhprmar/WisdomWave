@@ -1,6 +1,7 @@
 import Quote from '../models/quote.model.js';
 import { quoteSchema } from '../schemas/quote.schema.js';
 
+
 export const createQuote = async (req,res) => {
 
   try {
@@ -65,3 +66,5 @@ export const exploreOtherUsersQuotes = async (req,res)=>{
     res.status(500).json({message:"Internal Server Error"})
   }
 }
+
+

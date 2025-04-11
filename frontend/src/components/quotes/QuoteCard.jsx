@@ -5,7 +5,7 @@ import { Loader2Icon, ArrowUp, ArrowDown } from 'lucide-react'
 
 function QuoteCard() {
     
-    const { discoverQuotes, isLoading} = useQuoteStore();
+    const { discoverQuotes, isLoading,fetchRandomQuote} = useQuoteStore();
     const [allQuotes,setAllQuotes] = useState(null);
     const [colors, setColors] = useState([]);
     const [currentIndex,setCurrentIndex] = useState(0);
@@ -17,21 +17,28 @@ function QuoteCard() {
             b: Math.floor(Math.random() * 255)
         };
     };
-    
-    
-    useEffect(() => {
-        const loadQuotes = async ()=>{
-            const res = await discoverQuotes();
-            setAllQuotes(res)
 
-            if (res) {
-                setColors(res.map(() => getRandomColor()));
+    useEffect(() => {
+        const loadQuotes = async () => {
+            try {
+                // Fetch both user quotes and random quotes
+                const userQuotes = await discoverQuotes() || [];
+                const scrapedQuotes = await fetchRandomQuote() || [];
+
+                // Combine quotes
+                const combinedQuotes = [...userQuotes, ...scrapedQuotes];
+
+                console.log("Combined quotes:", combinedQuotes); // Debug log
+
+                setAllQuotes(combinedQuotes);
+                setColors(combinedQuotes.map(() => getRandomColor()));
+            } catch (error) {
+                console.error("Error loading quotes:", error);
             }
-        }
-        
-        loadQuotes()
-       
-    }, [])
+        };
+
+        loadQuotes();
+    }, []);
     
     
     if (isLoading) {
@@ -81,7 +88,7 @@ function QuoteCard() {
                         }}
                         className="p-4 border-none rounded-lg shadow mx-100 min-h-screen flex flex-col gap-6 relative justify-evenly"
                         >
-                        <h3 className="text-gray-950 p-3 rounded text-7xl">
+                        <h3 className="text-gray-950 p-3 rounded text-2xl">
                             {quote.content}
                         </h3>
                         <p className="mt-2 text-gray-900 text-5xl absolute right-3 bottom-5 font-medium">
