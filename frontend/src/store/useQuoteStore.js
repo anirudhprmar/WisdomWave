@@ -57,12 +57,10 @@ export const useQuoteStore = create((set)=>({
                 return formattedQuotes;
             } else {
                 console.error("Error fetching quotes:", data.message);
-                toast.error(data.message);
                 return null;
             }
         } catch (error) {
             console.error("Failed to fetch random quotes:", error);
-            toast.error("Failed to fetch random quotes");
             return null;
         } finally {
             set({isLoading: false})

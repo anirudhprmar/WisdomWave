@@ -2,10 +2,13 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 import { User, MessageSquare, Search, Plus , LogOutIcon, Moon, Sun , Leaf} from "lucide-react";
 import { useThemeStore } from "../../store/useThemeStore";
+// import { useState } from "react";
+import Button from '../../components/ui/Button'
 
 function Navbar() {
   const { authUser, logout } = useAuthStore();
   const {theme,setTheme} = useThemeStore();
+  
 
   return (
     <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg">
@@ -36,20 +39,20 @@ function Navbar() {
           {/* Right - Actions */}
           <div className="flex items-center gap-4">
 
-            {theme  && 
-            <>
-              <Sun className="size-5"
-              onClick={()=> setTheme("light")}
-              />
-
-              <Moon 
-              className="size-5"
-              onClick={()=>setTheme('dark')}
-              />
-            
-            </>
-            }
-
+            <Button
+            onClick={()=> setTheme(theme === 'dark' ? 'light': 'dark')}
+            variant="ghost"
+            size="sm"
+            className={'btn btn-circle'}
+            >
+              { 
+                theme === 'dark' ? (
+                  <Sun className="size-5"/>
+                ) : (
+                  <Moon className="size-5" />
+                )
+              }
+            </Button>
             
             
 
