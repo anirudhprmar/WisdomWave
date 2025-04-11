@@ -28,7 +28,7 @@ function QuoteCard() {
                 // Combine quotes
                 const combinedQuotes = [...userQuotes, ...scrapedQuotes];
 
-                console.log("Combined quotes:", combinedQuotes); // Debug log
+                // console.log("Combined quotes:", combinedQuotes); // Debug log
 
                 setAllQuotes(combinedQuotes);
                 setColors(combinedQuotes.map(() => getRandomColor()));

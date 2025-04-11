@@ -30,10 +30,11 @@ export const useQuoteStore = create((set)=>({
             set({isLoading:false})
         }
     },
-    savedQuotes: async ()=>{
+    UserCreatedQuotes: async ()=>{
         set({isLoading: true})
         try {
-            await axiosInstance.get('/quotes/my-quotes')
+            const res = await axiosInstance.get('/quotes/my-quotes')
+            return res.data.data.quotes
         } catch (error) {
             toast.error("Something went wrong",error.response.data.message)
         }finally{

@@ -5,12 +5,15 @@ import { quoteSchema } from '../schemas/quote.schema.js';
 export const createQuote = async (req,res) => {
 
   try {
-    const validatedData = await quoteSchema.parseAsync({
-      ...req.body,
-      user: req.user._id
-    });
-
-    const quote = await Quote.create(validatedData);
+    
+   const validatedData = await quoteSchema.parseAsync({
+    ...req.body,
+    userId: req.user._id.toString()
+  });
+  
+  // Create quote with original ObjectId
+  const quote = await Quote.create(validatedData);
+  
     
     res.status(201).json({
       status: 'success',
@@ -36,7 +39,8 @@ export const createQuote = async (req,res) => {
 
 export const getUserQuotes = async (req, res) => {
   try {
-    const quotes = await Quote.find({ userId: req.user._id });
+    const quotes = await Quote.find({ userId: req.user._id })
+
     res.json({
       status: 'success',
       results: quotes.length,
