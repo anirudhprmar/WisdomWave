@@ -30,7 +30,7 @@ export const useQuoteStore = create((set)=>({
             set({isLoading:false})
         }
     },
-    UserCreatedQuotes: async ()=>{
+    userCreatedQuotes: async ()=>{
         set({isLoading: true})
         try {
             const res = await axiosInstance.get('/quotes/my-quotes')
@@ -80,7 +80,7 @@ export const useQuoteStore = create((set)=>({
             return false;
         }
     },
-    UserSavedQuotes: async ()=>{
+    userSavedQuotes: async ()=>{
         set({isLoading: true})
         try {
             const res = await axiosInstance.get('/quotes/my-saved')
@@ -91,7 +91,7 @@ export const useQuoteStore = create((set)=>({
             set({isLoading: false})
         }
     },
-    AllUserQuotes: async ()=>{
+    allUserQuotes: async ()=>{
         set({isLoading: true})
         try {
             const res = await axiosInstance.get('/quotes/allQuotes')
@@ -100,6 +100,19 @@ export const useQuoteStore = create((set)=>({
             toast.error("Something went wrong",error.response.data.message)
         }finally{
             set({isLoading: false})
+        }
+    },
+    deleteUserQuote: async (quoteId) => {
+        try {
+           
+            const response = await axiosInstance.delete(`/quotes/${quoteId}/delete`);
+            if (response.data.status === 'success') {
+                return true;
+            }
+        } catch (error) {
+            console.log("Error in save this quote",error);
+            
+            return false;
         }
     }
 

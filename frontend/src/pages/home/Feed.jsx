@@ -4,14 +4,14 @@ import { useQuoteStore } from '../../store/useQuoteStore'
 import { Loader2Icon } from 'lucide-react'
 
 function Feed() {
-  const {AllUserQuotes,isLoading} = useQuoteStore()
+  const {allUserQuotes,isLoading} = useQuoteStore()
   const [allQuotes,setAllQuotes] = useState(null)
 
   useEffect(() => {
           const loadQuotes = async () => {
               try {
                   // Fetch both user quotes and random quotes
-                  const userQuotes = await AllUserQuotes() || [];
+                  const userQuotes = await allUserQuotes() || [];
   
                   setAllQuotes(userQuotes);
 

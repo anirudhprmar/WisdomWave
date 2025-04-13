@@ -12,4 +12,6 @@ router.put('/update-profile', protectRoute ,updateProfile)
 
 router.get('/check', protectRoute , checkAuth)
 
+// router.delete('/deleteProfile',deleteUserProfile)
+
 export default router;

@@ -155,3 +155,42 @@ export const saveQuote = async (req, res) => {
 };
 
 
+export const deleteQuote = async (req,res)=>{
+  try {
+    const loggedInUserId = req.user._id;
+    const { quoteId } = req.params;
+
+    //delete the quotes which are only created by the user
+
+    
+    const selectedQuote = await Quote.findById(quoteId)
+
+    if (!selectedQuote) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Quote not found'
+      });
+    }
+
+    const isCreatedByUser = selectedQuote.userId.toString() === loggedInUserId.toString();
+
+    if (!isCreatedByUser) {
+      return res.status(403).json({
+        status:"fail",
+        message:"You can only delete your own quotes"
+      })
+    }
+
+    await Quote.findByIdAndDelete(quoteId)
+    
+
+    res.status(200).json({
+      status:"Quote deleted"
+    })
+
+  } catch (error) {
+    console.log("Error in explore others users quotes:",err.message);
+    res.status(500).json({message:"Internal Server Error"})
+  }
+}
+
