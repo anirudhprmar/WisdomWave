@@ -1,5 +1,5 @@
 import express from "express"
-import {deleteQuote, getUserCreatedQuotes, createQuote ,exploreOtherUsersQuotes, saveQuote, getUserSavedQuotes, getUserQuotes } from "../controllers/quote.controller.js"
+import {removeSavedQuote,deleteQuote, getUserCreatedQuotes, createQuote ,exploreOtherUsersQuotes, saveQuote, getUserSavedQuotes, getUserQuotes } from "../controllers/quote.controller.js"
 import protectRoute from "../middlewares/auth.middleware.js"
 
 const router = express.Router()
@@ -16,6 +16,7 @@ router.post('/create', createQuote)
 router.put('/:quoteId/save',saveQuote)
 
 router.delete('/:quoteId/delete',deleteQuote)
+router.delete('/:quoteId/removeSaved',removeSavedQuote)
 
 
 

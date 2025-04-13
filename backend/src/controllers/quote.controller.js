@@ -194,3 +194,51 @@ export const deleteQuote = async (req,res)=>{
   }
 }
 
+
+export const removeSavedQuote = async(req,res)=>{
+  try {
+    const loggedInUserId = req.user._id;
+    const { quoteId } = req.params;
+
+    //delete the saved from user's id -> remove from the user savedby array
+
+    
+    const selectedQuote = await Quote.findById(quoteId)
+
+    if (!selectedQuote) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Quote not found'
+      });
+    }
+
+    // Check if quote was actually saved by this user
+    const alreadySaved = selectedQuote.savedBy.some(
+      id => id.toString() === loggedInUserId.toString()
+    );
+
+    if (!alreadySaved) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Quote was not saved by user'
+      });
+    }    
+
+    // Remove user from savedBy array using $pull operator
+    await Quote.findByIdAndUpdate(quoteId, {
+      $pull: { savedBy: loggedInUserId }
+    });
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Quote removed from saved'
+    });
+
+  } catch (error) {
+    console.error("Error in remove saved quote:", error); // Changed error message
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error'
+    });
+  }
+}

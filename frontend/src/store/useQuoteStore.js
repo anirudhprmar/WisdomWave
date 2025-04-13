@@ -114,6 +114,19 @@ export const useQuoteStore = create((set)=>({
             
             return false;
         }
+    },
+
+    removeSavedUserQuote: async (quoteId) =>{
+        try {
+           
+            const response = await axiosInstance.delete(`/quotes/${quoteId}/removeSaved`);
+            if (response.data.status === 'success') {
+                return true;
+            }
+        } catch (error) {
+            console.log("Error in save this quote",error);
+            return false;
+        }
     }
 
 }));
