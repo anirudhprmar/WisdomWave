@@ -1,12 +1,18 @@
 import mongoose from "mongoose";
 
 const saveSchema = mongoose.Schema({
-    _id: ObjectId,
-    user: ObjectId,
     quote: ObjectId,
-    createdAt: Date,
-    // collection: String   // Optional: if you allow multiple save collections
-  })
+    userId: {
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required:true
+    },
+    savedBy:[{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"User",
+      default:[]
+    }]
+  },{timestamps:true})
 
 const Save = mongoose.model("Save",saveSchema)
 export default Save;

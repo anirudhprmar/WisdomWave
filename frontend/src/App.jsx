@@ -9,6 +9,7 @@ import Feed from './pages/home/Feed';
 import Saved from './pages/home/Saved';
 import UserProfile from './pages/profile/UserProfile';
 import NotFound from './pages/NotFound';
+import MyQuotes from './pages/home/MyQuotes'
 import UploadQuote from './pages/home/UploadQuote';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
@@ -39,6 +40,7 @@ const {theme} = useThemeStore()
                   <Route path='/discover' element={<Discover/>} />
                   <Route path='/upload' element={<UploadQuote/>} />
                   <Route path='/my-feed' element={<Feed />} />
+                  <Route path='/my-quotes' element={<MyQuotes />} />
                   <Route path='/saved' element={<Saved/>} />
                   <Route path='/profile' element={<UserProfile/>} />
               </Route>

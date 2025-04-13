@@ -6,7 +6,7 @@ function Sidebar() {
 
   const navItems = [
     { icon: Home, label: 'Discover', path: '/discover' },
-    { icon: BookOpen, label: 'My Feed', path: '/my-feed' },
+    { icon: BookOpen, label: 'My Quotes', path: '/my-quotes' },
     { icon: Bookmark, label: 'Saved', path: '/saved' },
     { icon: User, label: 'Profile', path: '/profile' },
   ];

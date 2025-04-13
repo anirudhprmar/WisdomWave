@@ -15,9 +15,12 @@ const quoteSchema = new mongoose.Schema(
     isPublic: {
         type:Boolean,
         default:true
-    }      // public/private/followers-only
+    },     // public/private/followers-only
     // tags: [String],         // For categorization
-    // saves: [ObjectId],      // Array of user IDs who saved
+    savedBy: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     // saveCount: Number,      // Denormalized count
     // shares: Number,         // Share count
     // comments: [ObjectId],   // Array of comment IDs (if using ref)

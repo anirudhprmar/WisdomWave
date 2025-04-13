@@ -66,5 +66,41 @@ export const useQuoteStore = create((set)=>({
         } finally {
             set({isLoading: false})
         }
+    },
+    saveThisQuote: async (quoteId) => {
+        try {
+            // Remove the ':' from the URL
+            const response = await axiosInstance.put(`/quotes/${quoteId}/save`);
+            if (response.data.status === 'success') {
+                return true;
+            }
+        } catch (error) {
+            console.log("Error in save this quote",error.response.data.message);
+            
+            return false;
+        }
+    },
+    UserSavedQuotes: async ()=>{
+        set({isLoading: true})
+        try {
+            const res = await axiosInstance.get('/quotes/my-saved')
+            return res.data.data.quotes
+        } catch (error) {
+            toast.error("Something went wrong",error.response.data.message)
+        }finally{
+            set({isLoading: false})
+        }
+    },
+    AllUserQuotes: async ()=>{
+        set({isLoading: true})
+        try {
+            const res = await axiosInstance.get('/quotes/allQuotes')
+            return res.data.data.quotes
+        } catch (error) {
+            toast.error("Something went wrong",error.response.data.message)
+        }finally{
+            set({isLoading: false})
+        }
     }
+
 }));

@@ -1,14 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useQuoteStore } from '../../store/useQuoteStore'
-import { Loader2Icon, ArrowUp, ArrowDown } from 'lucide-react'
+import { Loader2Icon, ArrowUp, ArrowDown , Bookmark, Book} from 'lucide-react'
+import toast from 'react-hot-toast';
 
 function QuoteCard() {
     
-    const { discoverQuotes, isLoading,fetchRandomQuote} = useQuoteStore();
+    const { discoverQuotes, isLoading,fetchRandomQuote,saveThisQuote} = useQuoteStore();
     const [allQuotes,setAllQuotes] = useState(null);
     const [colors, setColors] = useState([]);
     const [currentIndex,setCurrentIndex] = useState(0);
+    
 
     const getRandomColor = () => {
         return {
@@ -17,6 +19,18 @@ function QuoteCard() {
             b: Math.floor(Math.random() * 255)
         };
     };
+
+    const saveQuote = async (id) => {
+        try {
+            await saveThisQuote(id);
+            toast.success('Quote saved successfully');
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Failed to save quote');
+            console.error("Error saving quote:", error);
+        }
+    };
+
+
 
     useEffect(() => {
         const loadQuotes = async () => {
@@ -78,6 +92,7 @@ function QuoteCard() {
             <div className='overflow-hidden relative max-h-screen '>
             {allQuotes && allQuotes.map((quote, index) => {
                 const bgColor = colors[index];
+                
                 return (
                     <>
                     <div 
@@ -99,6 +114,18 @@ function QuoteCard() {
                     </>
                 );
             })}
+            </div>
+
+            <div className='fixed right-105 bottom-50 '>
+
+                <button
+                className='btn-circle cursor-pointer'
+                onClick={() => saveQuote(allQuotes[currentIndex]._id)}
+                >
+                <Bookmark className='size-8'
+                />
+                </button>
+
             </div>
 
             <div className='right-2 top-1/2 flex flex-col gap-6 mr-35 fixed'>

@@ -39,7 +39,12 @@ export const createQuote = async (req,res) => {
 
 export const getUserQuotes = async (req, res) => {
   try {
-    const quotes = await Quote.find({ userId: req.user._id })
+    const quotes = await Quote.find({
+      $or: [
+        { userId: req.user._id },
+        { savedBy: req.user._id }
+      ]
+    });
 
     res.json({
       status: 'success',
@@ -52,6 +57,40 @@ export const getUserQuotes = async (req, res) => {
     res.status(500).json({message:"Internal Server Error"})
   }
 };
+
+export const getUserSavedQuotes = async (req, res) => {
+  try {
+    const quotes = await Quote.find({ savedBy: req.user._id });
+
+    res.json({
+      status: 'success',
+      results: quotes.length,
+      data: { quotes }
+    });
+  } catch (err) {
+    // Handle errors
+    console.log("Error in user quote:",err.message);
+    res.status(500).json({message:"Internal Server Error"})
+  }
+};
+
+
+export const getUserCreatedQuotes = async (req, res) => {
+  try {
+    const quotes = await Quote.find({ userId: req.user._id });
+
+    res.json({
+      status: 'success',
+      results: quotes.length,
+      data: { quotes }
+    });
+  } catch (err) {
+    // Handle errors
+    console.log("Error in user quote:",err.message);
+    res.status(500).json({message:"Internal Server Error"})
+  }
+};
+
 
 export const exploreOtherUsersQuotes = async (req,res)=>{
   try {
@@ -70,5 +109,49 @@ export const exploreOtherUsersQuotes = async (req,res)=>{
     res.status(500).json({message:"Internal Server Error"})
   }
 }
+
+export const saveQuote = async (req, res) => {
+  try {
+    const loggedInUserId = req.user._id;
+    const { quoteId } = req.params;
+
+    // Verify quote exists and check if already saved in one query
+    const selectedQuote = await Quote.findById(quoteId);
+    
+    if (!selectedQuote) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Quote not found'
+      });
+    }
+
+    // Check if user has already saved this quote
+    const alreadySaved = selectedQuote.savedBy.some(id => id.toString() === loggedInUserId.toString());
+    
+    if (alreadySaved) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Quote already saved by user'
+      });
+    }
+
+    // Add user to savedBy array
+    selectedQuote.savedBy.push(loggedInUserId);
+    await selectedQuote.save();
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Quote saved successfully',
+      data: { quote: selectedQuote }
+    });
+
+  } catch (error) {
+    console.error("Error in save quote:", error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error'
+    });
+  }
+};
 
 
