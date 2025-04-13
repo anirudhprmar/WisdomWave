@@ -20,12 +20,13 @@ function QuoteCard() {
         };
     };
 
-    const saveQuote = async (id) => {
+    const saveQuote = async () => {
         try {
-            await saveThisQuote(id);
+            const currentQuote = allQuotes[currentIndex];
+            await saveThisQuote(currentQuote);
             toast.success('Quote saved successfully');
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Failed to save quote');
+            // toast.error(error.response?.data?.message || 'Failed to save quote');
             console.error("Error saving quote:", error);
         }
     };
@@ -120,7 +121,7 @@ function QuoteCard() {
 
                 <button
                 className='btn-circle cursor-pointer'
-                onClick={() => saveQuote(allQuotes[currentIndex]._id)}
+                onClick={saveQuote}
                 >
                 <Bookmark className='size-8'
                 />

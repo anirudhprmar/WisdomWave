@@ -50,10 +50,9 @@ export const useQuoteStore = create((set)=>({
             if (data.status === 'success') {
                 // Format the scraped quotes to match your quote structure
                 const formattedQuotes = data.data.map(quote => ({
-                    _id: 'scraped-' + Math.random(),
                     content: quote.quote,
                     author: quote.author,
-                    book: quote.book
+                    isPublic:true
                 }));
                 return formattedQuotes;
             } else {
@@ -67,16 +66,37 @@ export const useQuoteStore = create((set)=>({
             set({isLoading: false})
         }
     },
-    saveThisQuote: async (quoteId) => {
+    saveThisQuote: async (quote) => {
         try {
-            // Remove the ':' from the URL
-            const response = await axiosInstance.put(`/quotes/${quoteId}/save`);
-            if (response.data.status === 'success') {
-                return true;
+            if (!quote._id) {
+                const createResponse = await axiosInstance.post('/quotes/create', {
+                    content: quote.content,
+                    author: quote.author,
+                    isPublic: true,
+                    savedBy:[]
+                });
+
+                if (createResponse.data.status === 'success') {
+                    // After creating, save it to user's saved quotes
+                    const newQuoteId = createResponse.data.data.quote._id;
+                    const saveResponse = await axiosInstance.put(`/quotes/${newQuoteId}/save`);
+                    
+                    if (saveResponse.data.status === 'success') {
+                        // toast.success('Quote saved successfully');
+                        return true;
+                    }
+                }
+
+            } else {
+                // For existing quotes, use the save endpoint
+                const response = await axiosInstance.put(`/quotes/${quote._id}/save`);
+                if (response.data.status === 'success') {
+                    // toast.success('Quote saved successfully');
+                    return true;
+                }
             }
         } catch (error) {
             console.log("Error in save this quote",error.response.data.message);
-            
             return false;
         }
     },
