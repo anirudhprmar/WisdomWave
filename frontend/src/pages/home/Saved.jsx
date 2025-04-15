@@ -53,11 +53,11 @@ function Saved() {
                               />
                           </div>
 
-              <p className="text-lg font-medium text-gray-800 italic">
+              <p className="text-lg font-medium text-gray-50 italic">
                 "{quote.content}"
               </p>
               <footer className="text-right">
-                <cite className="text-gray-600 font-semibold">
+                <cite className="text-gray-50 font-semibold">
                   - {quote.author}
                 </cite>
               </footer>

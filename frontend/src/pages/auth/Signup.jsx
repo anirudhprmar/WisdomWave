@@ -181,7 +181,7 @@ function Signup() {
   
         <AuthImagePattern
           title="Join our community"
-          subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
+          subtitle="Learn, Get Ideas , Get Inspired , Save your favourite quotes"
         />
       </div>
     );

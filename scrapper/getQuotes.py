@@ -19,7 +19,7 @@ def get_random_quote():
         random_term = random.choice(SEARCH_TERMS)
         logger.debug(f"Fetching quote for term: {random_term}")
         
-        result = quote(random_term, limit=2)
+        result = quote(random_term, limit=5)
         logger.debug(f"Quote result: {result}")
         
         if result and len(result) > 0:
