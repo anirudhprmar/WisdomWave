@@ -12,6 +12,20 @@ function Discover() {
     const [currentIndex,setCurrentIndex] = useState(0);
 
 
+    const prevSlide = useCallback(() => {
+        setCurrentIndex(current => {
+            const isFirstSlide = current === 0;
+            return isFirstSlide ? (allQuotes?.length || 0) - 1 : current - 1;
+        });
+    }, [allQuotes]);
+    
+    const nextSlide = useCallback(() => {
+        setCurrentIndex(current => {
+            const isLastSlide = current === (allQuotes?.length || 0) - 1;
+            return isLastSlide ? 0 : current + 1;
+        });
+    }, [allQuotes]);
+
 
     const handleNavigation = useCallback((direction) =>{
         if (direction === 'up') {
@@ -131,27 +145,16 @@ function Discover() {
     }
     
 
-    const prevSlide = () => {
-       const isFirstSlide = currentIndex === 0;
-       const newIndex = isFirstSlide ? allQuotes.length - 1 : currentIndex -1;
-       setCurrentIndex(newIndex)
-    };
-    
-    const nextSlide = () => {
-        const isLastSlide = currentIndex === allQuotes.length -1 ;
-        const newIndex = isLastSlide ? 0 : currentIndex + 1;
-        setCurrentIndex(newIndex)
-    };
     
 
     return (
         <div 
-            className="relative h-full flex flex-col items-center justify-center overflow-hidden mt-15"
+            className="relative h-full w-full flex flex-col items-center justify-center overflow-x-hidden mt-15"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
         >
-            <div className="w-full max-w-lg px-4 sm:px-6">
+            <div className="w-full max-w-lg px-4 sm:px-6 mx-auto">
                 {allQuotes && allQuotes.map((quote, index) => {
                     const bgColor = colors[index];
                     
@@ -162,7 +165,8 @@ function Discover() {
                                 backgroundColor: `rgb(${bgColor.r}, ${bgColor.g}, ${bgColor.b})`,
                                 display: index === currentIndex ? 'block' : 'none',
                             }}
-                            className="p-8 sm:p-12 rounded-3xl shadow-lg relative h-[70vh] sm:h-[60vh] flex flex-col justify-center"
+                            // p-8 sm:p-12 rounded-3xl shadow-lg relative h-[60vh] flex flex-col justify-center mx-auto
+                            className="p-8 sm:p-12 rounded-3xl shadow-lg relative h-[70vh] flex flex-col justify-center mx-auto"
                         >
                             <h3 className="text-gray-950 text-2xl font-medium">
                                 {quote.content}

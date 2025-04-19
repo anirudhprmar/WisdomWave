@@ -45,7 +45,7 @@ if (!allQuotes?.length) {
 
 
   return (
-    <div className="container mx-auto sm:px-4 sm:py-8">
+    <div className="container mx-auto sm:px-4 sm:py-17 mt-15 mb-20 sm:mt-0 sm:mb-2">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {allQuotes && allQuotes.map(quote => {
         return (

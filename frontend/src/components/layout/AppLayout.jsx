@@ -11,7 +11,7 @@ export default function AppLayout() {
       
       <div > {/* Added h-screen */}
         {/* Fixed Sidebar */}
-        <div className='sm:fixed left-0' >
+        <div  >
           <Sidebar />
         </div>
 

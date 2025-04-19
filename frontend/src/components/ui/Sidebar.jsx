@@ -13,7 +13,7 @@ function Sidebar() {
   ];
 
   return (
-    <div className="  fixed sm:top-16 bottom-0 left-0 h-14 sm:h-[calc(100%-4rem)] bg-base-200 sm:border-r sm:border-base-300 w-full sm:w-64 flex  flex-row justify-center sm:justify-start  items-center z-10">
+    <div className=" fixed sm:top-16 bottom-0 left-0 sm:h-[calc(100vh-4rem)] bg-base-200 w-full sm:w-64 flex flex-row justify-center sm:justify-start items-center sm:items-start border-t sm:border-t-0 border-base-300 z-10">
 
       {/* Navigation Section */}
       <nav className="p-4">

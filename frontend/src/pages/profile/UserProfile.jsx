@@ -25,7 +25,7 @@ function UserProfile() {
 
   }
   return (
-    <div className="h-screen ">
+    <div className="h-full mt-20 mb-20 sm:mt-12 sm:mb-0">
       <div className="max-w-2xl mx-auto sm:p-4 sm:py-3">
         <div className="bg-base-300 rounded-xl p-6 space-y-8">
           <div className="text-center">
