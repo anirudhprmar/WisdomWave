@@ -6,18 +6,21 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen bg-base-100">
       {/* Fixed Navbar */}
-      <Navbar />
+      <Navbar className="fixed top-0 w-full z-50" />
 
-      <div className="flex pt-16"> {/* Add padding-top to account for fixed navbar */}
+      
+      <div > {/* Added h-screen */}
         {/* Fixed Sidebar */}
-        <Sidebar />
+        <div className='sm:fixed left-0' >
+          <Sidebar />
+        </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 ml-64"> {/* Add margin-left to account for sidebar width */}
-          <main className="container mx-auto p-4">
+        {/* <div>  */}
+          <main className=" p-5 flex-1 sm:ml-64"> {/* Subtract navbar height */}
             <Outlet />
           </main>
-        </div>
+        {/* </div> */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
-import { User, MessageSquare, Search, Plus , LogOutIcon, Moon, Sun , Leaf} from "lucide-react";
+import { User, Search, Plus , LogOutIcon, Moon, Sun , Leaf} from "lucide-react";
 import { useThemeStore } from "../../store/useThemeStore";
 // import { useState } from "react";
 import Button from '../../components/ui/Button'
@@ -16,22 +16,22 @@ function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Left - Logo/Brand */}
           <div className="flex items-center gap-2">
-            <Link to="/discover" className="flex items-center gap-2 font-bold text-xl">
+            <Link to="/discover" className="flex items-center gap-2 font-bold text-2  xl">
               <Leaf className="size-6 text-primary" />
-              <span>WisdomWave</span>
+              <span className="hidden sm:block">WisdomWave</span>
             </Link>
           </div>
 
           {/* Middle - Search Bar */}
-          <div className="flex-1 max-w-2xl mx-8">
+          <div className="flex-1 mx-2 sm:max-w-2xl sm:mx-8">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="size-5 text-base-content/60" />
+                <Search className="size-5 text-base-content/60 z-10" />
               </div>
               <input
                 type="search"
                 placeholder="Search quotes..."
-                className="input input-bordered w-full pl-10"
+                className="input input-bordered w-full pl-10 "
               />
             </div>
           </div>
@@ -51,7 +51,7 @@ function Navbar() {
                 ) : (
                   <Moon className="size-5" />
                 )
-              }
+              } 
             </Button>
             
             
@@ -59,19 +59,13 @@ function Navbar() {
             {/* Upload Button */}
             <Link 
               to="/upload" 
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary btn-sm hidden sm:flex"
             >
               <Plus className="size-5" />
-              <span className="hidden sm:inline">Upload</span>
+              <span>Upload</span>
             </Link>
 
-            {/* Messages */}
-            <Link 
-              to="/messages" 
-              className="btn btn-ghost btn-circle btn-sm"
-            >
-              <MessageSquare className="size-5" />
-            </Link>
+           
 
             {/* Profile Menu */}
             <div className="dropdown dropdown-end">
@@ -86,12 +80,20 @@ function Navbar() {
               </label>
               { authUser && (
                 <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                {/* <li>
+                    <Link to="/upload">
+                    <Plus className="size-4" />
+                    <span>Upload</span>
+                    </Link>
+                </li> */}
+
                 <li>
                   <Link to="/profile">
                     <User className="size-4" />
                     Profile
                   </Link>
                 </li>
+               
                 <li>
                   <button onClick={logout} className="text-error">
                     <LogOutIcon className="size-4" />

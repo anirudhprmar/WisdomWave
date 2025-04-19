@@ -3,6 +3,8 @@ import {axiosInstance} from "../lib/axios.js"
 import toast from "react-hot-toast";
 
 
+// const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:3001/api" : "/"
+
 export const useAuthStore = create((set)=>({
     authUser:true,
     isSigningUp:false,
